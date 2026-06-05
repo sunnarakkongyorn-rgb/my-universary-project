@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>คณะที่ใช่ มหาลัยที่ชอบ (ภาคใต้)</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&family=Mitr:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Sarabun',sans-serif;background:#f5f7ff;color:#1a1a2e}
+
+/* อัปเดตพื้นหลัง .hero เป็นสีรุ้งไล่ระดับ (Rainbow Gradient) */
+.hero {
+  background: linear-gradient(135deg, #ff6b6b, #ff9f43, #feca57, #1dd1a1, #10ac84, #2e86de, #54a0ff, #9c88ff);
+  background-size: 200% 200%;
+  animation: rainbowAnimation 10s ease infinite;
+  padding: 3rem 2rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* เพิ่มแอนิเมชันให้สีรุ้งเคลื่อนไหวเบาๆ ดูมีมิติ ไม่แข็งทื่อ */
+@keyframes rainbowAnimation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.hero::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 50%,rgba(255,255,255,0.15) 0%,transparent 50%),radial-gradient(circle at 70% 30%,rgba(255,255,255,0.1) 0%,transparent 40%)}
+.hero-badge{display:inline-block;background:rgba(255,255,255,0.25);border:1px solid rgba(255,255,255,0.4);border-radius:20px;padding:6px 16px;font-size:13px;color:#fff;margin-bottom:1rem;letter-spacing:0.5px;font-weight: 500;text-shadow: 0 1px 2px rgba(0,0,0,0.1);}
+.hero h1{font-family:'Mitr',sans-serif;font-size:2.2rem;font-weight:600;color:#fff;line-height:1.3;margin-bottom:0.5rem;position:relative;text-shadow: 0 2px 4px rgba(0,0,0,0.15);}
+.hero-sub{font-size:1rem;color:#fff;margin-bottom:1.5rem;position:relative;text-shadow: 0 1px 2px rgba(0,0,0,0.15);font-weight: 500;}
+.search-bar{max-width:500px;margin:0 auto;position:relative}
+.search-bar input{width:100%;padding:12px 16px;border-radius:10px;border:none;font-family:'Sarabun',sans-serif;font-size:15px;outline:none;background:#fff;color:#1a237e;box-shadow:0 4px 10px rgba(0,0,0,0.15)}
+.tabs{display:flex;gap:8px;padding:1.2rem 2rem 0;overflow-x:auto;border-bottom:1px solid #e0e0e0;background:#fff}
+.tab{padding:10px 18px;font-family:'Sarabun',sans-serif;font-size:14px;border:none;background:none;cursor:pointer;color:#888;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;transition:all 0.2s}
+.tab.active{color:#1565c0;border-bottom-color:#1565c0;font-weight:600}
+.tab:hover:not(.active){color:#333}
+.content{padding:1.5rem 2rem;max-width:900px;margin:0 auto}
+.section-label{font-family:'Mitr',sans-serif;font-size:1.1rem;font-weight:500;color:#1a1a2e;margin-bottom:1rem}
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:1.5rem}
+.fac-card{background:#fff;border:1px solid #e8eaf6;border-radius:12px;padding:1rem;cursor:pointer;transition:all 0.2s}
+.fac-card:hover{border-color:#1565c0;box-shadow:0 0 0 3px rgba(21,101,192,0.08);transform:translateY(-1px)}
+.fac-card.selected{border:2px solid #1565c0;background:#e8f0fe}
+.fac-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:10px}
+.fac-name{font-family:'Mitr',sans-serif;font-size:14px;font-weight:500;color:#1a1a2e;margin-bottom:4px}
+.fac-desc{font-size:12px;color:#666;line-height:1.5}
+.unis-list{display:flex;flex-direction:column;gap:10px}
+.uni-row{display:flex;align-items:center;gap:14px;padding:14px 16px;background:#fff;border:1px solid #e8eaf6;border-radius:12px;cursor:pointer;transition:all 0.2s}
+.uni-row:hover{border-color:#1565c0;background:#f0f4ff}
+.uni-logo{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Mitr',sans-serif;font-weight:600;font-size:13px;flex-shrink:0;color:#fff}
+.uni-info{flex:1}
+.uni-name{font-family:'Mitr',sans-serif;font-size:15px;font-weight:500;color:#1a1a2e}
+.uni-meta{font-size:12px;color:#888;margin-top:2px}
+.uni-badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.badge{padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500}
+.badge-blue{background:#e3f0ff;color:#1565c0}
+.badge-green{background:#e8f5e9;color:#2e7d32}
+.badge-orange{background:#fff3e0;color:#e65100}
+.arrow-btn{width:28px;height:28px;border-radius:50%;background:#e8f0fe;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#1565c0;font-size:16px;flex-shrink:0}
+.filter-row{display:flex;gap:8px;margin-bottom:1.2rem;flex-wrap:wrap}
+.filter-btn{padding:7px 14px;border-radius:20px;border:1px solid #e0e0e0;background:#fff;font-family:'Sarabun',sans-serif;font-size:13px;cursor:pointer;color:#666;transition:all 0.2s}
+.filter-btn.on{background:#1565c0;border-color:#1565c0;color:#fff}
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.5rem}
+.stat-card{background:#e8f0fe;border-radius:10px;padding:14px;text-align:center}
+.stat-num{font-family:'Mitr',sans-serif;font-size:24px;font-weight:600;color:#1565c0}
+.stat-label{font-size:12px;color:#555;margin-top:2px}
+.empty{text-align:center;padding:3rem;color:#999;font-size:15px}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:999;align-items:center;justify-content:center;padding:1rem}
+.modal-overlay.open{display:flex}
+.modal{background:#fff;border-radius:20px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;padding:0}
+.modal-header{background:linear-gradient(135deg,#1a237e,#1565c0);border-radius:20px 20px 0 0;padding:1.5rem;color:#fff;position:relative}
+.modal-close{position:absolute;top:14px;right:16px;background:rgba(255,255,255,0.2);border:none;color:#fff;width:32px;height:32px;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.modal-close:hover{background:rgba(255,255,255,0.35)}
+.modal-uni-name{font-family:'Mitr',sans-serif;font-size:1.3rem;font-weight:600;margin-bottom:4px}
+.modal-uni-meta{font-size:13px;opacity:0.8}
+.modal-body{padding:1.5rem}
+.survey-title{font-family:'Mitr',sans-serif;font-size:1rem;font-weight:500;color:#1a1a2e;margin-bottom:1rem}
+.survey-q{margin-bottom:1.2rem}
+.survey-q-label{font-size:14px;color:#444;margin-bottom:8px;font-weight:500}
+.survey-opts{display:flex;flex-direction:column;gap:7px}
+.survey-opt{padding:10px 14px;border:1px solid #e0e0e0;border-radius:10px;font-family:'Sarabun',sans-serif;font-size:13px;cursor:pointer;background:#fff;color:#333;text-align:left;transition:all 0.2s}
+.survey-opt:hover{border-color:#1565c0;background:#f0f4ff}
+.survey-opt.picked{border:2px solid #1565c0;background:#e8f0fe;color:#1565c0;font-weight:600}
+.survey-textarea{width:100%;padding:10px 14px;border:1px solid #e0e0e0;border-radius:10px;font-family:'Sarabun',sans-serif;font-size:13px;resize:vertical;min-height:80px;outline:none;margin-top:4px}
+.survey-textarea:focus{border-color:#1565c0}
+.modal-submit{width:100%;padding:13px;background:#1565c0;color:#fff;border:none;border-radius:12px;font-family:'Mitr',sans-serif;font-size:15px;cursor:pointer;margin-top:1rem}
+.modal-submit:hover{background:#0d47a1}
+.survey-done{text-align:center;padding:2rem 1rem}
+.survey-done-icon{font-size:3rem;margin-bottom:1rem}
+.survey-done-title{font-family:'Mitr',sans-serif;font-size:1.2rem;font-weight:600;color:#1565c0;margin-bottom:6px}
+.survey-done-sub{font-size:13px;color:#666}
+
+/* สไตล์เพิ่มเติมสำหรับรายการเลือกคณะในหน้าต่าง Modal */
+.modal-fac-list {display:flex;flex-direction:column;gap:8px;margin-top:0.5rem;}
+.modal-fac-item {display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid #e0e0e0;border-radius:10px;cursor:pointer;transition:all 0.2s;background:#fff;}
+.modal-fac-item:hover {border-color:#1565c0;background:#f4f8ff;transform:translateX(2px);}
+.modal-fac-icon {width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;}
+.modal-fac-text {font-family:'Mitr',sans-serif;font-size:14px;font-weight:500;color:#1a1a2e;}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">🎓 โครงงาน: คณะที่ใช่ มหาลัยที่ชอบ (ภาคใต้)</div>
+  <h1>ค้นหาเส้นทางการศึกษา<br>ในภาคใต้ที่ใช่สำหรับคุณ</h1>
+  <p class="hero-sub">ค้นพบคณะและมหาวิทยาลัยในฝัน เริ่มต้นอนาคตที่คุณต้องการ</p>
+  <div class="search-bar">
+    <input id="search-input" type="text" placeholder="ค้นหาคณะ หรือมหาวิทยาลัย..." oninput="filterAll()">
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="setTab('explore')" id="tab-explore">🔍 มหาลัยในฝันที่คุณต้องการเเละคณะ</button>
+  <button class="tab" onclick="setTab('unis')" id="tab-unis">🏛️ มหาวิทยาลัย</button>
+</div>
+
+<div class="content">
+  <div id="explore-panel">
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-num">12</div><div class="stat-label">คณะวิชา</div></div>
+      <div class="stat-card"><div class="stat-num">6</div><div class="stat-label">มหาวิทยาลัยในใต้</div></div>
+      <div class="stat-card"><div class="stat-num">10+</div><div class="stat-label">วิทยาเขต/พื้นที่</div></div>
+    </div>
+    <div class="section-label">เลือกกลุ่มคณะที่สนใจ</div>
+    <div class="cards-grid" id="fac-grid"></div>
+    <div class="section-label" id="uni-header" style="display:none"></div>
+    <div class="unis-list" id="uni-list-explore"></div>
+  </div>
+
+  <div id="unis-panel" style="display:none">
+    <div class="filter-row" id="region-filters"></div>
+    <div class="unis-list" id="uni-list-all"></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-overlay" onclick="closeModalOutside(event)">
+  <div class="modal" id="modal-box">
+    <div class="modal-header" id="modal-header">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div style="display:flex;align-items:center;gap:12px">
+        <div id="modal-logo" style="width:48px;height:48px;border-radius:12px;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-family:'Mitr',sans-serif;font-weight:700;font-size:14px;color:#fff;flex-shrink:0"></div>
+        <div>
+          <div class="modal-uni-name" id="modal-uni-name"></div>
+          <div class="modal-uni-meta" id="modal-uni-meta"></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+const faculties = [
+  {id:'eng',name:'วิศวกรรมศาสตร์',icon:'⚙️',color:'#1565c0',desc:'ออกแบบ สร้าง และแก้ปัญหาด้วยวิทยาศาสตร์',tags:['วิทย์-คณิต','เทคโนโลยี']},
+  {id:'med',name:'แพทยศาสตร์',icon:'🏥',color:'#c62828',desc:'ดูแลสุขภาพ รักษาโรค และช่วยเหลือผู้คน',tags:['วิทย์-คณิต','สุขภาพ']},
+  {id:'bus',name:'บริหารธุรกิจ',icon:'📊',color:'#2e7d32',desc:'บริหาร การตลาด และการเงิน',tags:['สังคม','เศรษฐศาสตร์']},
+  {id:'law',name:'นิติศาสตร์',icon:'⚖️',color:'#4527a0',desc:'กฎหมาย ความยุติธรรม และสิทธิมนุษยชน',tags:['สังคม','กฎหมาย']},
+  {id:'arts',name:'อักษรศาสตร์/มนุษยศาสตร์',icon:'📚',color:'#e65100',desc:'ภาษา วรรณคดี และวัฒนธรรม',tags:['ภาษา','สังคม']},
+  {id:'sci',name:'วิทยาศาสตร์',icon:'🔬',color:'#00838f',desc:'ค้นคว้าวิจัยและทำความเข้าใจโลก',tags:['วิทย์-คณิต']},
+  {id:'arch',name:'สถาปัตยกรรมศาสตร์',icon:'🏛️',color:'#6a1b9a',desc:'ออกแบบพื้นที่และสิ่งก่อสร้าง',tags:['ศิลปะ','วิทย์-คณิต']},
+  {id:'com',name:'นิเทศศาสตร์/สื่อสาร',icon:'📡',color:'#1565c0',desc:'สื่อสารมวลชน โฆษณา และประชาสัมพันธ์',tags:['สังคม','ภาษา']},
+  {id:'edu',name:'ศึกษาศาสตร์/ครุศาสตร์',icon:'✏️',color:'#558b2f',desc:'พัฒนาการศึกษาและบ่มเพาะผู้เรียน',tags:['สังคม','ภาษา']},
+  {id:'it',name:'เทคโนโลยีสารสนเทศ/คอมพ์',icon:'💻',color:'#0277bd',desc:'พัฒนาซอฟต์แวร์และระบบดิจิทัล',tags:['วิทย์-คณิต','เทคโนโลยี']},
+  {id:'agri',name:'เกษตรศาสตร์',icon:'🌾',color:'#388e3c',desc:'เกษตรกรรม สิ่งแวดล้อม และอาหาร',tags:['วิทย์-คณิต','ธรรมชาติ']},
+  {id:'fineart',name:'วิจิตรศิลป์/ศิลปกรรม',icon:'🎨',color:'#ad1457',desc:'สร้างสรรค์งานศิลปะทุกรูปแบบ',tags:['ศิลปะ']},
+];
+
+const universities = [
+  {id:'psu',name:'มหาวิทยาลัยสงขลานครินทร์',abbr:'PSU',color:'#16a085',region:'สงขลา/ภูเก็ต',facs:['eng','med','sci','agri','it','bus','edu','law','arts'],campuses:{eng:'วิทยาเขตหาดใหญ่',it:'วิทยาเขตภูเก็ต/ตรัง',med:'วิทยาเขตหาดใหญ่',all:'วิทยาเขตหาดใหญ่/ปัตตานี'},rank:'อันดับ 1 ภาคใต้',type:'รัฐบาล'},
+  {id:'wu',name:'มหาวิทยาลัยวลัยลักษณ์',abbr:'WU',color:'#e67e22',region:'นครศรีธรรมราช',facs:['med','eng','sci','it','bus','law','agri'],campuses:{med:'อ.ท่าศาลา (ศูนย์การแพทย์)',all:'อ.ท่าศาลา นครศรีธรรมราช'},rank:'มหาวิทยาลัยวิจัยเด่นระดับสากล',type:'รัฐบาล'},
+  {id:'tsu',name:'มหาวิทยาลัยทักษิณ',abbr:'TSU',color:'#2980b9',region:'พัทลุง/สงขลา',facs:['edu','sci','law','arts','agri','bus','med'],campuses:{agri:'วิทยาเขตพัทลุง',med:'คณะพยาบาล/สาธารณสุข พัทลุง',all:'วิทยาเขตสงขลา / พัทลุง'},rank:'เด่นด้านครุศาสตร์และนิติศาสตร์',type:'มอทักษิน'},
+  {id:'rmutsv',name:'มทร.ศรีวิชัย',abbr:'RUT',color:'#9b59b6',region:'สงขลา/ตรัง/นครฯ',facs:['eng','bus','agri','it'],campuses:{agri:'วิทยาเขตนครศรีธรรมราช',all:'วิทยาเขตสงขลา/ตรัง'},rank:'เด่นด้านเทคโนโลยีและนวัตกรรมทำงาน',type:'รัฐบาล'},
+  {id:'skru',name:'มหาวิทยาลัยราชภัฏสงขลา',abbr:'SKRU',color:'#c0392b',region:'สงขลา',facs:['edu','arts','bus','sci','fineart','com'],campuses:{all:'อ.เมือง สงขลา'},rank:'เน้นพัฒนาท้องถิ่นและครูมืออาชีพ',type:'ราชภัฏ'},
+  {id:'sru',name:'มหาวิทยาลัยราชภัฏสุราษฎร์ธานี',abbr:'SRU',color:'#27ae60',region:'สุราษฎร์ธานี',facs:['edu','law','bus','sci','arts','it'],campuses:{all:'อ.เมือง สุราษฎร์ธานี'},rank:'ศูนย์กลางการศึกษาเมืองร้อยเกาะ',type:'ราชภัฏ'}
+];
+
+const surveyQuestions = [
+  {label:'คุณชอบคณะนี้เพราะอะไร?',opts:['สนใจเนื้อหาวิชา','อยากได้อาชีพที่มั่นคง','ครอบครัวแนะนำ','เพื่อนเรียนด้วยกัน','รายได้สูงในอนาคต','ชอบมาตั้งแต่เด็ก']},
+  {label:'คุณรู้จักมหาวิทยาลัยนี้จากไหน?',opts:['อินเทอร์เน็ต/โซเชียล','พ่อแม่/ครอบครัว','เพื่อนหรือรุ่นพี่','งานแนะแนว','เว็บไซต์มหาลัย']},
+  {label:'ความพร้อมด้านผลการเรียนของคุณ?',opts:['เกรดเฉลี่ยดีมาก (3.5+)','เกรดเฉลี่ยดี (3.0-3.5)','เกรดเฉลี่ยพอใช้ (2.5-3.0)','ยังไม่แน่ใจ']},
+];
+
+let selectedFac = null;
+let currentActiveTab = 'explore'; // เก็บสถานะแท็บปัจจุบัน
+let regionFilter = 'ทั้งหมด';
+let surveyAnswers = {};
+
+function setTab(tab){
+  currentActiveTab = tab;
+  ['explore','unis'].forEach(t=>{
+    const p=document.getElementById(t+'-panel');
+    if(p) p.style.display='none';
+    const tb=document.getElementById('tab-'+t);
+    if(tb) tb.classList.remove('active');
+  });
+  const show=document.getElementById(tab+'-panel');
+  if(show) show.style.display='';
+  const tb=document.getElementById('tab-'+tab);
+  if(tb) tb.classList.add('active');
+  if(tab==='unis') renderUniList();
+}
+
+function renderFacGrid(){
+  const q=document.getElementById('search-input').value.toLowerCase();
+  const grid=document.getElementById('fac-grid');
+  grid.innerHTML=faculties.filter(f=>!q||f.name.includes(q)||f.tags.some(t=>t.includes(q))).map(f=>`
+    <div class="fac-card${selectedFac===f.id?' selected':''}" onclick="selectFac('${f.id}')">
+      <div class="fac-icon" style="background:${f.color}22;font-size:24px">${f.icon}</div>
+      <div class="fac-name">${f.name}</div>
+      <div class="fac-desc">${f.desc}</div>
+    </div>`).join('');
+}
+
+function selectFac(id){
+  selectedFac=id;
+  renderFacGrid();
+  const fac=faculties.find(f=>f.id===id);
+  const unis=universities.filter(u=>u.facs.includes(id));
+  document.getElementById('uni-header').style.display='';
+  document.getElementById('uni-header').textContent='🏛️ มหาวิทยาลัยที่เปิดสอน '+fac.name;
+  
+  if(unis.length === 0){
+    document.getElementById('uni-list-explore').innerHTML=`<div class="empty">ยังไม่มีข้อมูลมหาลัยในภาคใต้ที่เปิดสอนคณะนี้ในระบบ</div>`;
+  } else {
+    document.getElementById('uni-list-explore').innerHTML=unis.map(u=>uniRowHTML(u,id,[fac.name])).join('');
+  }
+  setTimeout(()=>{document.getElementById('uni-header').scrollIntoView({behavior:'smooth',block:'start'})},100);
+}
+
+function uniRowHTML(u,facId,badges){
+  const fid=facId||selectedFac||'';
+  const campusName = u.campuses && u.campuses[fid] ? u.campuses[fid] : (u.campuses && u.campuses.all ? u.campuses.all : 'วิทยาเขตหลัก');
+  
+  return `<div class="uni-row" onclick="handleUniRowClick('${u.id}','${fid}')">
+    <div class="uni-logo" style="background:${u.color}">${u.abbr}</div>
+    <div class="uni-info">
+      <div class="uni-name">${u.name}</div>
+      <div class="uni-meta">${u.region} • ${u.type} • ${u.rank}</div>
+      <div class="uni-badges">
+        ${(badges||[]).map(b=>`<span class="badge badge-blue">${b}</span>`).join('')}
+        <span class="badge badge-green">${u.type}</span>
+        <span class="badge badge-orange">📍 ${campusName}</span>
+      </div>
+    </div>
+    <button class="arrow-btn">›</button>
+  </div>`;
+}
+
+// ฟังก์ชันคัดกรอง Event คลิกแถวมหาวิทยาลัยตามสถานะแท็บ
+function handleUniRowClick(uniId, facId){
+  if(currentActiveTab === 'unis') {
+    // ถ้าอยู่หน้าแท็บมหาวิทยาลัยทั้งหมด -> ให้ไปหน้าเลือกคณะก่อน
+    openFacultySelectionModal(uniId);
+  } else {
+    // ถ้าอยู่หน้าแท็บแรก (ค้นหาจากคณะ) -> ข้ามไปเปิดแบบสอบถามของคณะนั้นทันที
+    openModal(uniId, facId);
+  }
+}
+
+// 1. เพิ่มหน้าต่างแสดงรายชื่อคณะที่มีในมหาวิทยาลัย (สำหรับแท็บเมนูมหาวิทยาลัย)
+function openFacultySelectionModal(uniId) {
+  const u = universities.find(x => x.id === uniId);
+  surveyAnswers = {};
+  
+  document.getElementById('modal-logo').textContent = u.abbr;
+  document.getElementById('modal-uni-name').textContent = u.name;
+  document.getElementById('modal-uni-meta').textContent = u.region + ' • ' + u.type;
+  
+  // กรองเอาเฉพาะคณะที่มหาวิทยาลัยนี้เปิดสอน
+  const availableFacs = faculties.filter(f => u.facs.includes(f.id));
+  
+  const body = document.getElementById('modal-body');
+  body.innerHTML = `
+    <div class="survey-title">📌 กรุณาเลือกคณะที่ต้องการประเมิน / สนใจ:</div>
+    <div class="modal-fac-list">
+      ${availableFacs.map(f => `
+        <div class="modal-fac-item" onclick="selectFacultyInModal('${u.id}', '${f.id}')">
+          <div class="modal-fac-icon" style="background:${f.color}22">${f.icon}</div>
+          <div class="modal-fac-text">${f.name}</div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+  
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+// 2. เมื่อกดเลือกคณะจากในรายการ Modal แล้ว -> สลับเข้าหน้าแบบสอบถามทันที
+function selectFacultyInModal(uniId, facId) {
+  const u = universities.find(x => x.id === uniId);
+  const fac = faculties.find(x => x.id === facId);
+  const campusName = u.campuses && u.campuses[facId] ? u.campuses[facId] : (u.campuses && u.campuses.all ? u.campuses.all : 'วิทยาเขตหลัก');
+  
+  // อัปเดตข้อมูลหัวข้อ (Header) ให้โชว์ชื่อคณะที่พึ่งเลือก
+  document.getElementById('modal-uni-meta').textContent = fac.icon + ' ' + fac.name + ' • ' + u.region + ' • ' + u.type + ' (' + campusName + ')';
+  
+  // โหลดฟังก์ชันแบบสอบถามขึ้นมาแทนที่
+  renderSurvey(fac);
+}
+
+function openModal(uniId,facId){
+  const u=universities.find(x=>x.id===uniId);
+  const fac=faculties.find(x=>x.id===facId);
+  surveyAnswers={};
+  
+  const fid=facId||selectedFac||'';
+  const campusName = u.campuses && u.campuses[fid] ? u.campuses[fid] : (u.campuses && u.campuses.all ? u.campuses.all : 'วิทยาเขตหลัก');
+
+  document.getElementById('modal-logo').textContent=u.abbr;
+  document.getElementById('modal-logo').style.background='rgba(255,255,255,0.2)';
+  document.getElementById('modal-uni-name').textContent=u.name;
+  document.getElementById('modal-uni-meta').textContent=(fac?fac.icon+' '+fac.name+' • ':'')+u.region+' • '+u.type+' ('+campusName+')';
+  renderSurvey(fac);
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function renderSurvey(fac){
+  const body=document.getElementById('modal-body');
+  body.innerHTML=`
+    <div class="survey-title">${fac?fac.icon+' ':''}คุณชอบ${fac?'คณะ'+fac.name:'คณะนี้'}ที่นี่เพราะอะไร?</div>
+    ${surveyQuestions.map((sq,i)=>`
+      <div class="survey-q">
+        <div class="survey-q-label">${i+1}. ${sq.label}</div>
+        <div class="survey-opts">
+          ${sq.opts.map(o=>`<button class="survey-opt${surveyAnswers[i]===o?' picked':''}" onclick="pickSurvey(${i},'${o}',this)">${o}</button>`).join('')}
+        </div>
+      </div>`).join('')}
+    <div class="survey-q">
+      <div class="survey-q-label">4. มีอะไรอยากบอกเพิ่มเติมไหม? (ไม่บังคับ)</div>
+      <textarea class="survey-textarea" id="survey-extra" placeholder="เขียนได้เลย..."></textarea>
+    </div>
+    <button class="modal-submit" onclick="submitSurvey()">ส่งแบบสอบถาม ✓</button>`;
+}
+
+function pickSurvey(qi,val,el){
+  surveyAnswers[qi]=val;
+  el.closest('.survey-opts').querySelectorAll('.survey-opt').forEach(b=>b.classList.remove('picked'));
+  el.classList.add('picked');
+}
+
+function submitSurvey(){
+  const filled=Object.keys(surveyAnswers).length;
+  if(filled<2){
+    alert('กรุณาตอบอย่างน้อย 2 ข้อก่อนนะครับ');
+    return;
+  }
+  const body=document.getElementById('modal-body');
+  body.innerHTML=`
+    <div class="survey-done">
+      <div class="survey-done-icon">🎉</div>
+      <div class="survey-done-title">ขอบคุณสำหรับคำตอบ!</div>
+      <div class="survey-done-sub">ข้อมูลของคุณจะช่วยพัฒนาโครงงานนี้<br>ให้เป็นประโยชน์กับน้องๆ รุ่นต่อไป</div>
+      <button class="modal-submit" style="margin-top:1.5rem" onclick="closeModal()">ปิด</button>
+    </div>`;
+}
+
+function closeModal(){
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+function closeModalOutside(e){
+  if(e.target===document.getElementById('modal-overlay')) closeModal();
+}
+
+function renderUniList(){
+  const q=document.getElementById('search-input').value.toLowerCase();
+  const types=['ทั้งหมด',...[...new Set(universities.map(u=>u.type))]];
+  document.getElementById('region-filters').innerHTML=types.map(t=>`<button class="filter-btn${regionFilter===t?' on':''}" onclick="setRegion('${t}')">${t}</button>`).join('');
+  const filtered=universities.filter(u=>(regionFilter==='ทั้งหมด'||u.type===regionFilter)&&(!q||u.name.includes(q)||u.abbr.toLowerCase().includes(q)));
+  document.getElementById('uni-list-all').innerHTML=filtered.length?filtered.map(u=>uniRowHTML(u,'',[])).join(''):`<div class="empty">ไม่พบมหาวิทยาลัยที่ตรงกับการค้นหา</div>`;
+}
+
+function setRegion(t){regionFilter=t;renderUniList();}
+
+function filterAll(){
+  renderFacGrid();
+  if(document.getElementById('unis-panel').style.display!='none') renderUniList();
+}
+
+renderFacGrid();
+</script>
+</body>
+</html>
